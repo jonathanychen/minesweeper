@@ -1,2 +1,2 @@
-# minesweeper
-minesweeper!
+# Minesweeper
+Minesweeper, but in Rust!
