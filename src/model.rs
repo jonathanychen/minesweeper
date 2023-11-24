@@ -16,11 +16,27 @@ pub struct MinesweeperModel {
 
 impl MinesweeperModel {
     pub fn new() -> MinesweeperModel {
-        MinesweeperModel { height: 0, width: 0, mines: 0, board: Vec::new(), num_tiles: 0, status: GameStatus::NotReady, rng: rand::SeedableRng::seed_from_u64(rand::thread_rng().gen()) }
+        MinesweeperModel { 
+            height: 0, 
+            width: 0, 
+            mines: 0, 
+            board: Vec::new(), 
+            num_tiles: 0, 
+            status: GameStatus::NotReady, 
+            rng: rand::SeedableRng::seed_from_u64(rand::thread_rng().gen()) 
+        }
     }
 
     pub fn new_seeded(seed: u64) -> MinesweeperModel {
-        MinesweeperModel { height: 0, width: 0, mines: 0, board: Vec::new(), num_tiles: 0, status: GameStatus::NotReady, rng: rand::SeedableRng::seed_from_u64(seed) }
+        MinesweeperModel { 
+            height: 0, 
+            width: 0, 
+            mines: 0, 
+            board: Vec::new(), 
+            num_tiles: 0, 
+            status: GameStatus::NotReady, 
+            rng: rand::SeedableRng::seed_from_u64(seed) 
+        }
     }
 
     pub fn init_game(&mut self) {
@@ -38,6 +54,11 @@ impl MinesweeperModel {
 
     pub fn get_width(&self) -> i32 {
         self.width
+    }
+
+    // eventually change to mines - flags
+    pub fn get_mines(&self) -> i32 {
+        self.mines
     }
 
     pub fn custom_board(&mut self, height: i32, width: i32, mines: i32) {

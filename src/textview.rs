@@ -15,9 +15,9 @@ impl MinesweeperTextView {
         let board: Vec<Tile> = self.model.get_board();
         let width = self.model.get_width();
 
-        let mut i = 0;
+        let mut i: i32 = 0;
         for tile in board {
-            let char = get_char(tile);
+            let char: char = get_char(tile);
             print!("{}", char);
             i += 1;
             if i % width == 0 {
@@ -43,7 +43,5 @@ impl MinesweeperTextView {
                 Value::Eight => '8',
             }
         }
-
-
     }
 }
