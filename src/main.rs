@@ -10,6 +10,9 @@ fn main() {
     model.custom_board(10, 10, 25);
     model.init_game();
     let view: MinesweeperTextView = MinesweeperTextView::new(model);
-    view.view_board();
+    println!("True board:");
+    view.view_true_board();
+    println!("Visible board:");
+    view.view_visible_board();
 }
 

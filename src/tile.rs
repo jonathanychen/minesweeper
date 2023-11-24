@@ -15,7 +15,7 @@ impl Tile {
                 true => Value::Mine,
                 false => Value::Zero,
             },
-            visible: true
+            visible: false
         }
     }
 
@@ -64,4 +64,12 @@ pub enum Value {
     Six,
     Seven,
     Eight,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Visible {
+    Start,
+    Visible,
+    Hidden,
+    Flagged,
 }

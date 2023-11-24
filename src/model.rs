@@ -93,7 +93,7 @@ impl MinesweeperModel {
     fn create_board_vector(&mut self, mines: HashSet<i32>) {
         for r in 0..self.height {
             for c in 0..self.width {
-                let index: i32 = c + r * self.width;
+                let index: i32 = self.get_tile_index(r, c);
                 self.board.push(Tile::new(c, r, mines.contains(&index)))
             }
         }
@@ -111,20 +111,20 @@ impl MinesweeperModel {
     }
 
     fn tile_is_mine(&mut self, r: i32, c: i32) -> bool {
-        let center: usize = (r * self.width + c).try_into().unwrap();
+        let center: usize = self.get_tile_index(r, c).try_into().unwrap();
         let current: &Tile = self.board.get(center).unwrap();
         current.get_value() == Value::Mine
     }
 
     fn calculate_mine_count(&mut self, r: i32, c: i32) -> i32 {
         let mut count: i32 = 0;
-        for d in DIRECTIONS.clone() {
+        for d in DIRECTIONS {
             let c2: i32 = c + d[0];
             let r2: i32 = r + d[1];
             if r2 < 0 || r2 >= self.height || c2 < 0 || c2 >= self.width {
                 continue;
             }
-            let i: usize = (r2 * self.width + c2) as usize;
+            let i: usize = self.get_tile_index(r2, c2) as usize;
             match self.board.get(i) {
                 Some(tile) => if tile.get_value() == Value::Mine {
                     count += 1
@@ -136,9 +136,13 @@ impl MinesweeperModel {
     }
 
     fn update_tile(&mut self, r: i32, c: i32, count: i32) {
-        let center: usize = (r * self.width + c).try_into().unwrap();
+        let center: usize = self.get_tile_index(r, c).try_into().unwrap();
         let current: &mut Tile = &mut self.board.get_mut(center).unwrap();
         current.set_value(Tile::get_associated_value(count).unwrap());
+    }
+
+    fn get_tile_index(&self, r: i32, c: i32) -> i32 {
+        r * self.width + c
     }
 }
 
