@@ -81,38 +81,43 @@ impl MinesweeperModel {
     pub fn update_board(&mut self) {
         for r in 0..self.height {
             for c in 0..self.width {
-                let mut count: i32 = 0;
-                let center: usize = (r * self.width + c).try_into().unwrap();
-                let current: &Tile = self.board.get(center).unwrap();
-                if current.get_value() == Value::Mine {
-                    continue;
+                if !self.tile_is_mine(r, c) {
+                    let count: i32 = self.calculate_mine_count(r, c);
+                    self.update_tile(r, c, count);
                 }
-
-
-                for d in DIRECTIONS.clone() {
-
-                    let c2: i32 = c + d[0];
-                    let r2: i32 = r + d[1];
-                    if r2 < 0 || r2 >= self.height || c2 < 0 || c2 >= self.width {
-                        continue;
-                    }
-
-                    let i: usize = (r2 * self.width + c2) as usize;
-                    match self.board.get(i) {
-                        Some(tile) => if tile.get_value() == Value::Mine {
-                            count += 1
-                        },
-                        None => continue,
-                    };
-
-                }
-
-                let current: &mut Tile = &mut self.board.get_mut(center).unwrap();
-                current.set_value(Tile::get_associated_value(count).unwrap());
             }
         }
+    }
 
+    fn tile_is_mine(&mut self, r: i32, c: i32) -> bool {
+        let center: usize = (r * self.width + c).try_into().unwrap();
+        let current: &Tile = self.board.get(center).unwrap();
+        current.get_value() == Value::Mine
+    }
 
+    fn calculate_mine_count(&mut self, r: i32, c: i32) -> i32 {
+        let mut count: i32 = 0;
+        for d in DIRECTIONS.clone() {
+            let c2: i32 = c + d[0];
+            let r2: i32 = r + d[1];
+            if r2 < 0 || r2 >= self.height || c2 < 0 || c2 >= self.width {
+                continue;
+            }
+            let i: usize = (r2 * self.width + c2) as usize;
+            match self.board.get(i) {
+                Some(tile) => if tile.get_value() == Value::Mine {
+                    count += 1
+                },
+                None => continue,
+            };
+        }
+        count
+    }
+
+    fn update_tile(&mut self, r: i32, c: i32, count: i32) {
+        let center: usize = (r * self.width + c).try_into().unwrap();
+        let current: &mut Tile = &mut self.board.get_mut(center).unwrap();
+        current.set_value(Tile::get_associated_value(count).unwrap());
     }
 }
 
