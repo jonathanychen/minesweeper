@@ -1,4 +1,4 @@
-use crate::{board::Board, model::MinesweeperModel, tile::{Value, Tile}};
+use crate::{model::MinesweeperModel, tile::{Value, Tile}};
 
 pub struct MinesweeperTextView {
     model: MinesweeperModel

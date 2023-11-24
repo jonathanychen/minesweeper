@@ -2,7 +2,6 @@ use crate::{model::MinesweeperModel, textview::MinesweeperTextView};
 
 mod model;
 mod tile;
-mod board;
 mod textview;
 
 fn main() {
