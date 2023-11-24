@@ -12,13 +12,11 @@ impl MinesweeperTextView {
     }
 
     pub fn view_board(&self) {
-        let board: Board = self.model.get_board();
-        let info = board.get_info();
-        let width = info.1;
-        let grid = info.2;
+        let board: Vec<Tile> = self.model.get_board();
+        let width = self.model.get_width();
 
         let mut i = 0;
-        for tile in grid {
+        for tile in board {
             let char = get_char(tile);
             print!("{}", char);
             i += 1;

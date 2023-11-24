@@ -15,7 +15,7 @@ impl Tile {
                 true => Value::Mine,
                 false => Value::Zero,
             },
-            visible: false
+            visible: true
         }
     }
 
@@ -28,12 +28,31 @@ impl Tile {
         self.value
     }
 
+    pub fn set_value(&mut self, value: Value) {
+        self.value = value;
+    }
+
     pub fn is_visible(&self) -> bool {
         self.visible
     }
+
+    pub fn get_associated_value(number: i32) -> Option<Value> {
+        match number {
+            0 => Some(Value::Zero),
+            1 => Some(Value::One),
+            2 => Some(Value::Two),
+            3 => Some(Value::Three),
+            4 => Some(Value::Four),
+            5 => Some(Value::Five),
+            6 => Some(Value::Six),
+            7 => Some(Value::Seven),
+            8 => Some(Value::Eight),
+            _ => None,
+        }
+    }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Value {
     Mine,
     Zero,
